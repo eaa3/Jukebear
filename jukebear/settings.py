@@ -35,6 +35,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit',       #### ADDED
+    'jukebox.apps.JukeboxConfig',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,6 +127,15 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
 
+
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+
+
+########### NEW STUFF
+TAGGIT_CASE_INSENSITIVE = True
+
+
