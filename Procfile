@@ -1,0 +1,1 @@
+web: gunicorn jukebear.wsgi --log-file -
