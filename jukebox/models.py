@@ -13,12 +13,18 @@ class Song(models.Model):
     link = models.URLField(primary_key=True)
     stats = models.OneToOneField(Stats)
 
+    def __unicode__(self):
+        return self.link
+
 class JukeUser(models.Model):
     
     user = models.OneToOneField(User)
 
     firstname = models.CharField(max_length=100,blank=False)
     lastname = models.CharField(max_length=100,blank=False)
+
+    def __unicode__(self):
+        return "%s %s"%(self.firstname,self.lastname)
 
 class JukeBox(models.Model):
     name = models.CharField(max_length=100,blank=False)
@@ -28,4 +34,7 @@ class JukeBox(models.Model):
     songs = models.ManyToManyField(Song)
 
     stats = models.OneToOneField(Stats)
+
+    def __unicode__(self):
+        return "%d"%(self.id)
 
