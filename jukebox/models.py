@@ -31,7 +31,7 @@ class JukeBox(models.Model):
     owner = models.ForeignKey(JukeUser,related_name='jukeboxes')
     is_public = models.BooleanField(blank=False)
     djs = models.ManyToManyField(JukeUser,related_name='subscribed_jukeboxes') 
-    songs = models.ManyToManyField(Song)
+    songs = models.ManyToManyField(Song, blank=True)
 
     stats = models.OneToOneField(Stats)
 

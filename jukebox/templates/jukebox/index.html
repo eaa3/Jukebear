@@ -27,11 +27,43 @@
             <li>{{vid}}</li>
         {% endfor %}
       </ul>
+
+
+      <button onclick="updatePlaylist()"> hohoho </button>
+      <input id="add_song" type="text" name="firstname"><br>
     </div>
+
+
+
 
     </div>
 
-    
+<!--     <div style="display:none">
+        <input type="hidden" name="csrfmiddlewaretoken" value="$csrf_token"/>
+    </div> -->
+
+    <script>
+      // /href="http://localhost:8000/jukebox/update_playlist" 
+      function updatePlaylist(){
+        textfield = document.getElementById("add_song")
+        xhr = new XMLHttpRequest();
+        var url = "http://localhost:8000/jukebox/update_playlist";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.onreadystatechange = function () { 
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var json = JSON.parse(xhr.responseText);
+                console.log(json.email + ", " + json.password)
+            }
+        }
+        var data = JSON.stringify({"link": textfield.value});
+        xhr.send(data);
+
+        textfield.value="";
+      }
+
+
+    </script>
 
 
     <script src="{% static 'jukebox/js/VPlayer.js' %}">
