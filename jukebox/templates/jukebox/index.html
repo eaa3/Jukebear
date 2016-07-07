@@ -53,7 +53,7 @@
         xhr.onreadystatechange = function () { 
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var json = JSON.parse(xhr.responseText);
-                console.log(json.email + ", " + json.password)
+                console.log("Received: " + json.SomeData);
             }
         }
         var data = JSON.stringify({"link": textfield.value});
