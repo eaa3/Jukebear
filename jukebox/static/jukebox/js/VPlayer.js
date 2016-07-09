@@ -1,8 +1,10 @@
 
+var player = null;
+var done = false;
 
 function initPlayer(do_callback, on_player_state_change){
 
-  var player = null;
+
 
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
@@ -35,7 +37,7 @@ function initPlayer(do_callback, on_player_state_change){
   // 5. The API calls this function when the player's state changes.
   //    The function indicates that when playing a video (state=1),
   //    the player should play for six seconds and then stop.
-  var done = false;
+
   function onPlayerStateChange(event) {
 
     on_player_state_change(player,event);
@@ -54,6 +56,10 @@ function playVideo(player,vid){
     //player.loadVideoByUrl({mediaContentUrl:vid});
     player.loadVideoById({videoId: vid});
 
+}
+
+function getPlayer(){
+  return player;
 }
 
 

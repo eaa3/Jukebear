@@ -5,16 +5,29 @@ from django.contrib.auth.models import User
 
 
 class Stats(models.Model):
-    up = models.IntegerField()
-    down = models.IntegerField()
+    up = models.IntegerField(default=0)
+    down = models.IntegerField(default=0)
 
     
 class Song(models.Model):
     link = models.URLField(primary_key=True)
-    stats = models.OneToOneField(Stats)
 
     def __unicode__(self):
         return self.link
+
+class Playlist(models.Model):
+    songs = models.ManyToManyField('Song', through='PlaylistMembership')
+
+class PlaylistMembership(models.Model):
+    playlist = models.ForeignKey(Playlist)
+    song = models.ForeignKey(Song)
+    date_added = models.DateField(auto_now=True)
+
+    stats = models.OneToOneField(Stats)
+
+    class Meta:
+        ordering = ['date_added']
+
 
 class JukeUser(models.Model):
     
@@ -27,11 +40,11 @@ class JukeUser(models.Model):
         return "%s %s"%(self.firstname,self.lastname)
 
 class JukeBox(models.Model):
-    name = models.CharField(max_length=100,blank=False)
+    name = models.CharField(max_length=100,blank=False,default="New Jukebox")
     owner = models.ForeignKey(JukeUser,related_name='jukeboxes')
     is_public = models.BooleanField(blank=False)
     djs = models.ManyToManyField(JukeUser,related_name='subscribed_jukeboxes') 
-    songs = models.ManyToManyField(Song, blank=True)
+    playlist = models.ForeignKey(Playlist,blank=True,related_name='playlist')
 
     stats = models.OneToOneField(Stats)
 
