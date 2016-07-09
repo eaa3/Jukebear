@@ -31,6 +31,9 @@
 
       <button onclick="updatePlaylist()"> Add song </button>
       <input id="add_song" type="text" name="firstname"><br>
+
+      <button onclick="updateStats('true')"> Up </button>
+      <button onclick="updateStats('false')"> Down </button>
     </div>
 
 
@@ -61,6 +64,23 @@
         xhr.send(data);
 
         textfield.value="";
+      }
+
+      function updateStats(UpDown){
+        xhr = new XMLHttpRequest();
+        var url = "http://localhost:8000/jukebox/update_stats";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+
+        xhr.onreadystatechange = function () { 
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var json = JSON.parse(xhr.responseText);
+                console.log("I am updating the stats: " + json.SomeData);
+            }
+        }
+
+        var data = JSON.stringify({"stat": UpDown,"id":"{{jukebox_id}}"});
+        xhr.send(data);
       }
 
 

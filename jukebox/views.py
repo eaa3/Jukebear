@@ -1,7 +1,9 @@
 from django.shortcuts import render
 
-
-from urlparse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 from .models import Song
 from .models import JukeBox
@@ -33,18 +35,32 @@ def index(request,jukebox_id):
 
     vids = map(lambda s : getYoutubeVid(s.link), songs)
     context = {'hello_message': 'Hello World!',
-               'video_list': vids
+               'video_list': vids,
+               'jukebox_id': jukebox_id,
     }
     return render(request, 'jukebox/index.html', context)
 
 @csrf_exempt
 def update_playlist(request):
 
-    received_data = json.loads(request.body)
+    try:
+        received_data = json.loads(request.body)
+    except TypeError:
+        received_data = json.loads(request.body.decode('utf-8'))   #support for python 3
 
     print("oh yes dude! ", received_data["link"])
 
+    return JsonResponse({'SomeData':'Data!!'})
 
+@csrf_exempt
+def update_stats(request):
+
+    try:
+        received_data = json.loads(request.body)
+    except TypeError:
+        received_data = json.loads(request.body.decode('utf-8'))   #support for python 3
+
+    print("Got this data", received_data["stat"]," from instance ",received_data["id"])
 
     return JsonResponse({'SomeData':'Data!!'})
 
