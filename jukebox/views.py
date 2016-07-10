@@ -102,7 +102,7 @@ def update_stats(request):
 
     return JsonResponse({'SomeData':'Data!!'})
 
-def get_playlist(request):
+def get_playlist(request,**kwargs):
 
     jukebox_id = kwargs['jukebox_id']
 
