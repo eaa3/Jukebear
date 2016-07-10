@@ -59,7 +59,6 @@ function updatePlaylist(jukebox_id, csrf_token){
             list.appendChild(item);
           }
           if(playlist.length == 1){
-            initPlayer(doCallback, onPlayerStateChange)
             playVideo(getPlayer(),playlist[playIdx]);
           }
       }
